@@ -94,4 +94,6 @@ decoder.eval()
 state = decoder.init_state(encoder(X))
 output, state = decoder(X, state)
 ```
+The whole process is shown below. As mentioned above, we can use word2vec module to generate embedding results to use.
+![image](https://user-images.githubusercontent.com/89610539/177789008-550b859f-65c8-4d3d-a941-3e510e2770a5.png)
 
