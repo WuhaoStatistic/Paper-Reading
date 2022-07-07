@@ -94,8 +94,12 @@ reduce the capacity of module(after all, by default we only have 3 conv layers i
 
 ## Finally
 
-Lets see some results from my work. (1024*1024) 
+Lets see some results from my work(photo -> painting). (1024*1024)  
+
 ![665b6ac262a7e08e3cd9e86712653b2](https://user-images.githubusercontent.com/89610539/177804679-c8511436-746c-468a-98b9-2ef1e8eaad32.png)
 ![361499ff76e7d5e5cb3526ff3a2cd28](https://user-images.githubusercontent.com/89610539/177804739-f0331e80-5b0a-4e1a-bd62-4fb88f1b052f.png)
 ![baf4e11befb7abeb215f5ee3917ceda](https://user-images.githubusercontent.com/89610539/177804818-409003af-120b-4141-a5ab-edfa49e943d2.png)
+![1f41bc152b737f1f17b4d7b107361e4](https://user-images.githubusercontent.com/89610539/177805585-667f25b6-f52f-4810-a970-36b6f8055d43.png)
 
+Not all the pictures in high quality    
+![722c2390e18cdbefce8f694923e5da8](https://user-images.githubusercontent.com/89610539/177805529-61cf650e-689e-4836-ab34-66b98362a053.png)
