@@ -94,7 +94,7 @@ reduce the capacity of module(after all, by default we only have 3 conv layers i
 
 ## Finally
 
-Lets see some results from my work.  
+Lets see some results from my work. (1024*1024) 
 ![665b6ac262a7e08e3cd9e86712653b2](https://user-images.githubusercontent.com/89610539/177804679-c8511436-746c-468a-98b9-2ef1e8eaad32.png)
 ![361499ff76e7d5e5cb3526ff3a2cd28](https://user-images.githubusercontent.com/89610539/177804739-f0331e80-5b0a-4e1a-bd62-4fb88f1b052f.png)
 ![baf4e11befb7abeb215f5ee3917ceda](https://user-images.githubusercontent.com/89610539/177804818-409003af-120b-4141-a5ab-edfa49e943d2.png)
