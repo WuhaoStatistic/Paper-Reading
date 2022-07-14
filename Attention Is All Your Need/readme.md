@@ -1,5 +1,5 @@
 # Attention is all you need
-
+First, we will go through the paper and structure. Then there will be some understanding from my perspectve. Some notes will be marked **[exp_n]** 
 ## Word Embedding
 At the begging of transformer module, we welcome the input embedding layer and output embedding layer. We will start from here to introduce all the module. We all know that
 the input and output are in string format. However, string format is not friendly to calculation and storage. The first simple idea is build a dictionary for all the distinct
@@ -28,13 +28,30 @@ Now, we can step into encoder part. Encoder is consisted of `attention` and `for
 ### One-head attention
 
 Multi-Head attention is based on one-head attention. In the one-head attention, we have 3 matrix Q(querry),K(key),V(value) from  
-$$Q = XW^Q $$
-$$K = XW^K $$ 
-$$V = XW^V $$  
-$R^{d_m\ *d_m}$
-W is  and X is $R^{n*d_m}$,so Q,K,V are $R^{n*d_m}$  
-We can see that Q,K,V are from X itself, that why we call it `self-attention`. These three matrix is trainable and will be updated during training. In the self-attention, we will calculate $\tilde{A}$ from  
+$$Q = W_QX $$
+$$K = W_KX $$ 
+$$V = W_VX $$  
+As for the shape,note that X is $n\times d_m$ ,**Q,K** are $n\times d_K$ and **V** is $n\times d_v$. n is the input length and $d_m$ is dimension of embedding.  
+We can see that Q,K,V are just linear calculation of X, that why we call it `self-attention`. These three matrix is trainable and will be updated during training. In the self-attention, we will calculate $\tilde{A}$ from  
 $$\tilde{A} = \frac{QK^T}{\sqrt{d_m}}$$
-where $d_m$ is dimension of embedded word.
+Apprently, the shape of $\tilde{A}$ is $n\times n$. Then we do softmax for each row in A,that is(in python sytle)  
+$$\tilde{A_{i,:}}\  =\ softmax(\tilde{A_{i,:}})$$  
+Then we use V to extract information from A. **[exp1]**
+$$Attention(Q,K,V) = \tilde{A}V$$
 
+One may find some latent problem here. When we do padding, normally we will add one in the X matrix. And all the calculation we did above are liner calculation without bias which will keep padding value 0 to $\tilde{A}$. And we all know that we will do exponantial calculation in softmax layer and padding value will become 1 to each word.
+That's a huge disaster. To solve this problem, we can **inplace padding value 0  to $10^{-9}$**
 
+Another interesting thing is denominator $\sqrt{d_m}$. If there is no such denominator, the product will grow up rapidly with multiple attention blocks. Finally, the value after softmax will extremely close to 1 and we will suffer gradient vanishing there.In the paper, author call this **scaled-dot-product**.
+
+### Multi-head attention
+In the paper, author set $d_k=d_v=\frac{d_m}{h}$. One thing different from one-head attention is that the dimention of Q,K,V are $n_\times d_m$.  **[exp2]**
+$$Q_i = QW_i^Q,\ \ \ \ \ Q_i\ is\ R^{n\times d_k}$$
+$$K_i = KW_i^K,\ \ \ \ \ K_i\ is\ R^{n\times d_k}$$
+$$V_i = VW_i^V,\ \ \ \ \ V_i\ is\ R^{n\times d_v}$$
+And now,   
+$$\tilde{A_i} = \frac{Q_iK_i^T}{\sqrt{d_k}}$$
+$$head_i = softmax(\tilde{A_i})V_i$$
+We can calculate that $head_i$ is in the shape of $n\times d_v$
+And then, like explination in the paper, we concatenate them together,So **[exp3]**.
+$$H = [H_1,H_2,H_3....H_h]\in R^{n'times d_v \dot h}$$
