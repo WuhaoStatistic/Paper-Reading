@@ -66,8 +66,16 @@ Author put this graph for readers to better understand how multi-head works. The
 The same as previous one, we will have multiple head and $d_k=d_v=\frac{d_m}{h}$. The different thing happens when we start to build $Q_i,K_i\ \ and V_i$.Instead of applying a liner calculation(or projection), we simply devided **Q** into **h** part by its column,in python style,that is:
 $$Q_i = Q[1:n,i\dot\ d_k\ :(i+1)d_k]$$
 It is totally same for **K** and **V**. This implementation will reduce a lot of calculation.After that, we use the same method to get $H_i$ and concatenate them together, then feed **H** into a fully connected net to get output.
+
 ### Res connection and Norm
 Res connection is quite simple. Since we have $H^{[1]}$ in the same shape of X, we can just add them together:
 $$X^{[2]} =H^{[1]}\ +\  X \ \in \ R^{n\times\ d_m}$$ 
 
-When it comes to normolization, batch normolization is not a good choice. Because
+When it comes to normolization, batch normolization is not a good choice. Because our model is dynamic model (**n** will change during the training). In this case, if there is padding in the word, the number of 0 will have strong impact on batch normolization. Layer normolization can help solve this problem. When applying layer normolization, we are normolizing each word.
+
+### Feed Forward
+Here is just anothor DNN net which project $X^{[2]}$ to its own space($R^{n\times \ d_m}$).After that, we apply the same res connection and Norm and get output $X^{[3]}$.
+
+Now, we have $X^{[3]}\ \in R^{n'times \ d_m}$ in the same shape as input $X$. We have **N** attention blocks, so we can set X^{[3]} as input to repeat this process....  
+That's how encoder part works.
+
