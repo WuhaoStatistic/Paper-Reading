@@ -83,3 +83,19 @@ That's how encoder part works.
 The same as models in seq2seq, the input of decoder is different between training and testing stage. In the training stage, we apply `teacher force` feeding the decoder the correct target output. The embedding part and positional part are the same as encoder.
 `tips: If there is any question about how to train a decoder, please see seq2seq model first.`
 
+In decoder, we first have `Masked Multi-Head Attention`, this is for building relationshaip inside output. Here, we can not use information that is from future.For example, when we do a traslation task, say that there is a training sample:
+`a b c` -> `w x y z`
+Where `a b c` is from a language(3 words) and `w x y z` is from another language(4 words). Machine can only come up with words one by one. So when machine gets result `x`, it doesn't know the next one is`y`, but it does know te previous result `w`. So we need to use mask to disable the word located after where we are doing prediction.
+
+Next block help mixture information from encoder and information from target scource. Q is from target source, K and V are from encoder.
+
+============================================================================================  
+[**EXP1**] Q and K is used for building up information.Assume now you are a word in this model(then you have three vectors Q,K,V), Q is used for yourself to find others. K is a label of you for others searching. So, we can see Q and K is for building the connection between different words. But why do we need two vectors to build relationship? One reason is this relationship is not symmetric. If we go into more details, it would be:  
+When we are in word x, we use x.q to match all the key, and when we are in word y, we use y.q to match all the key. And x.q * y.k should be different as y.q * x.k, because "x y" and "y x" normally have different meaning. But why **V** would take a position here? Q,K is for building up information, but how much should we use each information? We are refering to V. V help attention model contain more information and also help select information.
+`tips: to understand this explination, we should know that vector*vector just like projection, we can use scaled result to measure whether two vectors are close to each other.`
+
+[**EXP2**]
+The shape of V can be different as Q and K, but in this paper, author set them equally.
+
+[**EXP3**]
+If we understand multi-head from CNN perspective, each head is like convolutional core(or channel). Multi-head is corresponding to multi core convolution. After convolution layer,in the CNN, normally there would be pooling or FC to gather the information just like FeedForwad here.
