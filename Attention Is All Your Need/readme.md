@@ -77,5 +77,9 @@ When it comes to normolization, batch normolization is not a good choice. Becaus
 Here is just anothor DNN net which project $X^{[2]}$ to its own space($R^{n\times \ d_m}$).After that, we apply the same res connection and Norm and get output $X^{[3]}$.
 
 Now, we have $X^{[3]}\ \in R^{n'times \ d_m}$ in the same shape as input $X$. We have **N** attention blocks, so we can set X^{[3]} as input to repeat this process....  
-That's how encoder part works.
+That's how encoder part works.  
+
+## Decoder
+The same as models in seq2seq, the input of decoder is different between training and testing stage. In the training stage, we apply `teacher force` feeding the decoder the correct target output. The embedding part and positional part are the same as encoder.
+`tips: If there is any question about how to train a decoder, please see seq2seq model first.`
 
