@@ -8,4 +8,4 @@ multiple paper illustrate their idea about adding attention in CV tasks. However
 this bias.
 
 ## Net Structure
-<img src="/net.jpg" width = "400" height = "400" alt="" align=center />
+<img src="net.jpg" width = "400" height = "400" alt="" align=center />
