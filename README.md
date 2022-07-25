@@ -12,4 +12,4 @@ Here are my reading records and some personal notes. For some paper, I also trie
 
 **5 Vision Transformer**
 
-**5 Visual Transformer**
+**6 Visual Transformer**
